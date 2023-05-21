@@ -249,13 +249,23 @@ class LoginController: UIViewController {
         if !ValidateForm() {
             return
         }
+
+        let email = emailTextField.text ?? ""
+        let password = "\(passwordTextField.text ?? "")"
         
-        if emailTextField.text == "example@email.com" && passwordTextField.text == "password" {
-            // Successful login
-            self.navigationController?.pushViewController(DashboardController(), animated: true)
-        } else {
-            // Invalid email or password
-            showLoginErrorAlert()
+        let user = User(email: email, password: password)
+        
+        //var result = ApiResult()
+        
+        loginUser(user: user) { results in
+            let success = results.isSuccess ?? false
+            
+            if(success == true){
+                self.navigationController?.pushViewController(MainController(), animated: true)
+            }
+            else {
+                self.showLoginErrorAlert()
+            }
         }
     }
     

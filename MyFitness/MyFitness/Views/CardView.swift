@@ -23,13 +23,13 @@ class CardView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setupViews()
+//        setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        setupViews()
+//        setupViews()
     }
     
     private func setupViews() {

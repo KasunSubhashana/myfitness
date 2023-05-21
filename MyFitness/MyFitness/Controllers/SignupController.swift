@@ -18,6 +18,36 @@ class SignupController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         return label
     }()
     
+    let fullNameLabel : LabelView = {
+        let label = LabelView()
+        label.text = "Full Name"
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        
+        return label
+    }()
+    
+    let fullNameTextField: TextFieldView = {
+        let textField = TextFieldView()
+        textField.placeholder = "Enter your full name"
+        
+        return textField
+    }()
+    
+    let userNameLabel : LabelView = {
+        let label = LabelView()
+        label.text = "Username"
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        
+        return label
+    }()
+    
+    let userNameTextField: TextFieldView = {
+        let textField = TextFieldView()
+        textField.placeholder = "Enter your username"
+        
+        return textField
+    }()
+    
     let emailLabel : LabelView = {
         let label = LabelView()
         label.text = "Email Address"
@@ -216,55 +246,190 @@ class SignupController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         return button
     }()
     
-    var pickerData:[String] = [String]()
+    let scrollView: UIScrollView = {
+//        let scroll = UIScrollView(frame: view.bounds)
+        let scroll = UIScrollView()
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.showsVerticalScrollIndicator = true
+        
+        return scroll
+    }()
+    
+    var genderPickerData:[String] = [String]()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //let scrollView = UIScrollView(frame: view.bounds)
+//        scrollView.backgroundColor = . red
+        //scrollView.delegate = self
+        signupButton.addTarget(self, action: #selector(self.clickSignupEvent), for: .touchUpInside)
+        
+        scrollView.contentSize = CGSize(width: view.frame.size.width, height: view.frame.size.height + 15)
+        
+        
+        
         self.dobDatePicker.addTarget(self, action: #selector(onDobDateChanged), for: .valueChanged)
-        genderTextField.addTarget(self, action: #selector(self.showLoginErrorAlert), for: .touchDown)
+        genderTextField.addTarget(self, action: #selector(self.showGenderPopup), for: .touchDown)
         
         self.genderPicker.delegate = self
         self.genderPicker.dataSource = self
         
-        pickerData = ["Male","Female"]
+        self.title = "Signup"
+        
+        genderPickerData = ["Male","Female"]
+        
+        
         
         view.backgroundColor = .white
-        view.addSubview(signupHeader)
-        view.addSubview(emailLabel)
-        view.addSubview(emailTextField)
-        view.addSubview(emailErrorLabel)
-        view.addSubview(passLabel)
-        view.addSubview(passwordTextField)
-        view.addSubview(passErrorLabel)
-        view.addSubview(confirmPassLabel)
-        view.addSubview(confirmPasswordTextField)
-        view.addSubview(confirmPassErrorLabel)
-        view.addSubview(ageLabel)
-        view.addSubview(ageTextField)
-        view.addSubview(dobLabel)
-        view.addSubview(dobDatePicker)
-        view.addSubview(genderLabel)
-        view.addSubview(genderTextField)
-        view.addSubview(genderPicker)
-        view.addSubview(heightLabel)
-        view.addSubview(heightTextField)
-        view.addSubview(weightLabel)
-        view.addSubview(weightTextField)
-        view.addSubview(signupButton)
+//        scrollView.addSubview(signupHeader)
+        view.addSubview(scrollView)
+        scrollView.addSubview(fullNameLabel)
+        scrollView.addSubview(fullNameTextField)
+        scrollView.addSubview(userNameLabel)
+        scrollView.addSubview(userNameTextField)
+        scrollView.addSubview(emailLabel)
+        scrollView.addSubview(emailTextField)
+        scrollView.addSubview(emailErrorLabel)
+        scrollView.addSubview(passLabel)
+        scrollView.addSubview(passwordTextField)
+        scrollView.addSubview(passErrorLabel)
+        scrollView.addSubview(confirmPassLabel)
+        scrollView.addSubview(confirmPasswordTextField)
+        scrollView.addSubview(confirmPassErrorLabel)
+        scrollView.addSubview(ageLabel)
+        scrollView.addSubview(ageTextField)
+        scrollView.addSubview(dobLabel)
+        scrollView.addSubview(dobDatePicker)
+        scrollView.addSubview(genderLabel)
+        scrollView.addSubview(genderTextField)
+        scrollView.addSubview(genderPicker)
+        scrollView.addSubview(heightLabel)
+        scrollView.addSubview(heightTextField)
+        scrollView.addSubview(weightLabel)
+        scrollView.addSubview(weightTextField)
+        scrollView.addSubview(signupButton)
         
         setConstraints()
+        
+        
+        
+//        view.backgroundColor = .white
+//        view.addSubview(signupHeader)
+//        view.addSubview(fullNameLabel)
+//        view.addSubview(fullNameTextField)
+//        view.addSubview(userNameLabel)
+//        view.addSubview(userNameTextField)
+//        view.addSubview(emailLabel)
+//        view.addSubview(emailTextField)
+//        view.addSubview(emailErrorLabel)
+//        view.addSubview(passLabel)
+//        view.addSubview(passwordTextField)
+//        view.addSubview(passErrorLabel)
+//        view.addSubview(confirmPassLabel)
+//        view.addSubview(confirmPasswordTextField)
+//        view.addSubview(confirmPassErrorLabel)
+//        view.addSubview(ageLabel)
+//        view.addSubview(ageTextField)
+//        view.addSubview(dobLabel)
+//        view.addSubview(dobDatePicker)
+//        view.addSubview(genderLabel)
+//        view.addSubview(genderTextField)
+//        view.addSubview(genderPicker)
+//        view.addSubview(heightLabel)
+//        view.addSubview(heightTextField)
+//        view.addSubview(weightLabel)
+//        view.addSubview(weightTextField)
+//        view.addSubview(signupButton)
+//
+//        setConstraints()
     }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//
+//        let scrollView = UIScrollView(frame: view.bounds)
+//        view.addSubview(scrollView)
+//
+//        view.backgroundColor = .white
+//        scrollView.addSubview(signupHeader)
+//        scrollView.addSubview(fullNameLabel)
+//        scrollView.addSubview(fullNameTextField)
+//        scrollView.addSubview(userNameLabel)
+//        scrollView.addSubview(userNameTextField)
+//        scrollView.addSubview(emailLabel)
+//        scrollView.addSubview(emailTextField)
+//        scrollView.addSubview(emailErrorLabel)
+//        scrollView.addSubview(passLabel)
+//        scrollView.addSubview(passwordTextField)
+//        scrollView.addSubview(passErrorLabel)
+//        scrollView.addSubview(confirmPassLabel)
+//        scrollView.addSubview(confirmPasswordTextField)
+//        scrollView.addSubview(confirmPassErrorLabel)
+//        scrollView.addSubview(ageLabel)
+//        scrollView.addSubview(ageTextField)
+//        scrollView.addSubview(dobLabel)
+//        scrollView.addSubview(dobDatePicker)
+//        scrollView.addSubview(genderLabel)
+//        scrollView.addSubview(genderTextField)
+//        scrollView.addSubview(genderPicker)
+//        scrollView.addSubview(heightLabel)
+//        scrollView.addSubview(heightTextField)
+//        scrollView.addSubview(weightLabel)
+//        scrollView.addSubview(weightTextField)
+//        scrollView.addSubview(signupButton)
+//
+//
+//
+//        setConstraints()
+//
+//        scrollView.contentSize = CGSize(width: view.frame.size.width, height: 2500)
+//    }
     
     func setConstraints(){
         
         NSLayoutConstraint.activate([
-            signupHeader.topAnchor.constraint(equalTo: view.topAnchor, constant: 65),
-            signupHeader.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        
+//        NSLayoutConstraint.activate([
+////            signupHeader.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 65),
+//            signupHeader.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//        ])
+        
+        NSLayoutConstraint.activate([
+            fullNameLabel.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 15),
+            fullNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            fullNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 30)
         ])
         
         NSLayoutConstraint.activate([
-            emailLabel.topAnchor.constraint(equalTo: signupHeader.bottomAnchor, constant: 30),
+            fullNameTextField.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 5),
+            fullNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            fullNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            fullNameTextField.heightAnchor.constraint(equalToConstant: 42)
+        ])
+        
+        NSLayoutConstraint.activate([
+            userNameLabel.topAnchor.constraint(equalTo: fullNameTextField.bottomAnchor, constant: 25),
+            userNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            userNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 30)
+        ])
+        
+        NSLayoutConstraint.activate([
+            userNameTextField.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 5),
+            userNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            userNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            userNameTextField.heightAnchor.constraint(equalToConstant: 42)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emailLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 25),
             emailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             emailLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 30)
         ])
@@ -376,20 +541,30 @@ class SignupController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         ageTextField.text = String(age)
     }
     
-    @objc func signUpButtonTapped() {
-        if emailTextField.text == "" || passwordTextField.text == "" {
-            //            errorLabel.text = "Please enter"
-            //            errorLabel.isHidden = false
-            
+    @objc func clickSignupEvent() {
+        
+//        let user: User = User()
+        let fullName = fullNameTextField.text ?? ""
+        let userName = userNameTextField.text ?? ""
+        let email = emailTextField.text ?? ""
+        let password = "\(passwordTextField.text ?? "")"
+        let dob = dobDatePicker.date
+        let gender = genderTextField.text ?? ""
+        let height = Float(heightTextField.text ?? "0") ?? 0
+        let weight = Float(weightTextField.text ?? "0") ?? 0
+        
+        let user = User(fullName: fullName, userName: userName, email: email, password: password, dob: dob, gender: gender, height: height, weight: weight)
+        
+        //var result = ApiResult()
+        
+        userRegister(user: user) { results in
+//            if let result = results {
+//                showSignupAlert(apiResult: result)
+//            }
+            self.showSignupAlert(apiResult: results)
         }
-        if emailTextField.text == "example@email.com" && passwordTextField.text == "password" {
-            // Successful login
-            // You can navigate to the next screen here
-        } else {
-            // Invalid email or password
-            //            errorLabel.text = "Invalid email or password"
-            //            errorLabel.isHidden = false
-        }
+        
+//        showSignupAlert(apiResult: result)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -406,17 +581,17 @@ class SignupController: UIViewController, UIPickerViewDelegate, UIPickerViewData
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        return genderPickerData.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
+        return genderPickerData[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.genderTextField.isHidden = false;
         self.genderPicker.isHidden = true;
-        self.genderTextField.text = pickerData[row];
+        self.genderTextField.text = genderPickerData[row];
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -425,7 +600,7 @@ class SignupController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         return false
     }
     
-    @objc func showLoginErrorAlert() {
+    @objc func showGenderPopup() {
         let vc = UIViewController()
         vc.preferredContentSize = CGSize(width: 250,height: 200)
         
@@ -436,9 +611,29 @@ class SignupController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         
         let editRadiusAlert = UIAlertController(title: "Choose Gender", message: "", preferredStyle: UIAlertController.Style.alert)
         editRadiusAlert.setValue(vc, forKey: "contentViewController")
-        editRadiusAlert.addAction(UIAlertAction(title: "Done", style: .default, handler: nil))
-        //        editRadiusAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
+        editRadiusAlert.addAction(UIAlertAction(title: "Done", style: .default, handler: { _ in
+            self.genderTextField.text = self.genderPickerData[self.genderPicker.selectedRow(inComponent: 0)]
+        }))
         self.present(editRadiusAlert, animated: true)
+    }
+    
+    func showSignupAlert(apiResult: ApiResult) {
+        
+        var alertTitle = ""
+        
+        if (apiResult.isSuccess == true) {
+            alertTitle = "Success"
+        }
+        else {
+            alertTitle = "Error"
+        }
+        
+        let alert = UIAlertController(title: alertTitle, message: apiResult.message, preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { _ in
+            //Cancel Action
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
